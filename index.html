@@ -7,25 +7,13 @@
     <meta name="HandheldFriendly" content="true">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <title>Jamrock :: The herbsman's web framework</title>
-    <meta name="release" content="9af8f4a">
+    <meta name="release" content="e5c7559">
     <style>/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */ /* Tomorrow Comment */ .hljs-comment, .hljs-quote { color: #8e908c; } /* Tomorrow Red */ .hljs-variable, .hljs-template-variable, .hljs-tag, .hljs-name, .hljs-selector-id, .hljs-selector-class, .hljs-regexp, .hljs-deletion { color: #c82829; } /* Tomorrow Orange */ .hljs-number, .hljs-built_in, .hljs-builtin-name, .hljs-literal, .hljs-type, .hljs-params, .hljs-meta, .hljs-link { color: #f5871f; } /* Tomorrow Yellow */ .hljs-attribute { color: #eab700; } /* Tomorrow Green */ .hljs-string, .hljs-symbol, .hljs-bullet, .hljs-addition { color: #718c00; } /* Tomorrow Blue */ .hljs-title, .hljs-section { color: #4271ae; } /* Tomorrow Purple */ .hljs-keyword, .hljs-selector-tag { color: #8959a8; } .hljs { display: block; overflow-x: auto; background: white; color: #4d4d4c; padding: 0.5em; } .hljs-emphasis { font-style: italic; } .hljs-strong { font-weight: bold; }</style>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat">
-    <style>@keyframes floating { 0% { transform: translateY(0%); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0%); } } body { font-family: Montserrat, 'Sorts Mill Goudy'; background-color: #01111F; color: #BEBEBE; } svg { fill: currentColor; } hr { border: none; border-top: 2px dashed #13272D; } a { color: #79C551; } a:hover { color: #B3E72D; } blockquote { margin: 0; padding: 5px 0 5px 0.5rem; border-radius: 3px; border-left: 0.5rem solid #13272D; background-color: rgba(0, 0, 0, 0.3); } blockquote p:first-child { margin-top: 0; } blockquote p:last-child { margin-bottom: 0; } pre code { display: block; padding: 0.5rem; } p code { color: #B3E72D; } ul, ol { padding-left: 2rem; } small { font-size: 0.8rem; } code { background-color: #2C4C43; border-radius: 3px; padding: 0 2px; color: #79C551; } .meteorite { text-align: center; } .meteorite svg { max-width: 66%; } .meteorite a { transition: color 0.5s; color: #FEFEFE; } .meteorite a:hover { color: #B3E72D; } .floating { animation-name: floating; animation-duration: 4s; animation-iteration-count: infinite; } .welcome { color: #AAEEAA; } .welcome svg { max-width: 150px; margin-top: 50px; } .dimmed { color: #2C4C43; text-shadow: 1px 1px 3px #000000; } .center { text-align: center; } .reset { margin: 0; } .hljs { padding: 0; background-color: rgba(0, 0, 0, 0.3); } .hljs code { background-color: unset; } .body { max-width: 640px; margin: auto; margin-bottom: 50px; } .body h1, .body h2, .body h3, .body h4 { color: #2C4C43; text-shadow: 1px 1px 3px #000000; } .flex { display: flex; } .flex .gap { gap: 1rem; } .flex.between { justify-content: space-between; } .flex.centered { align-items: center; }</style>
+    <style>@keyframes floating { 0% { transform: translateY(0%); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0%); } } body { font-family: Montserrat, 'Sorts Mill Goudy'; background-color: #01111F; color: #BEBEBE; } svg { fill: currentColor; } hr { border: none; border-top: 2px dashed #13272D; } a { color: #79C551; } a:hover { color: #B3E72D; } blockquote { margin: 0; padding: 5px 0 5px 0.5rem; border-radius: 3px; border-left: 0.5rem solid #13272D; background-color: rgba(0, 0, 0, 0.3); } blockquote p:first-child { margin-top: 0; } blockquote p:last-child { margin-bottom: 0; } pre code { display: block; padding: 0.5rem; } p code { color: #B3E72D; } ul, ol { padding-left: 2rem; } small { font-size: 0.8rem; } code { background-color: #2C4C43; border-radius: 3px; padding: 0 2px; color: #79C551; } .meteorite { text-align: center; } .meteorite svg { max-width: 66%; } .meteorite a { transition: color 0.5s; color: #FEFEFE; } .meteorite a:hover { color: #B3E72D; } .floating { animation-name: floating; animation-duration: 4s; animation-iteration-count: infinite; } .welcome { color: #AAEEAA; } .welcome svg { max-width: 150px; margin-top: 50px; } .dimmed { color: #2C4C43; text-shadow: 1px 1px 3px #000000; } .center { text-align: center; } .reset { margin: 0; } .hljs { padding: 0; background-color: rgba(0, 0, 0, 0.3); } .hljs code { background-color: unset; } .body { padding: 1rem; max-width: 640px; margin: auto; margin-bottom: 50px; } .body h1, .body h2, .body h3, .body h4 { color: #2C4C43; text-shadow: 1px 1px 3px #000000; } .flex { display: flex; } .flex .gap { gap: 1rem; } .flex.between { justify-content: space-between; } .flex.centered { align-items: center; }</style>
 
   </head>
   <body class="reset">
-    <script>
-      /* eslint-disable */
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      
-      ga('create', '', 'auto');
-      ga('send', 'pageview');
-      /* eslint-enable */
-      
-    </script>
     <main class="body">
       <div class="center"><span class="welcome"><svg viewBox="0 0 402.9 80.701" xmlns="http://www.w3.org/2000/svg">
   <g fill-rule="evenodd" font-size="9pt" id="svgGroup" stroke-linecap="round" stroke-width="0.25mm">
