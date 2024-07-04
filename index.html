@@ -203,16 +203,33 @@ Listening on http://0.0.0.0:8080
 <blockquote>
 <p>404 pages will include useful information like the available routes, env, etc.</p>
 </blockquote>
+<h3 id="preparing-to-style-your-pages-%F0%9F%92%85">Preparing to style your pages 💅</h3>
+<p>By default we include UnoCSS support if you place a <code>./unocss.config.mjs</code> script in your application folder, e.g.</p>
+<pre class="hljs"><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  <span class="hljs-attr">rules</span>: [
+    [<span class="hljs-string">&#x27;thingy&#x27;</span>, { <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;red&#x27;</span> }],
+  ],
+};
+</code></pre>
+<p>Also you can use regular <code>&lt;style&gt;</code> tags, all rules will be scoped unless you declare the <code>global</code> attribute.</p>
+<blockquote>
+<p>Set the <code>lang</code> attribute to use Less, Sass, PostCSS or something else if you prefer (ensure you have installed the dependency!).</p>
+</blockquote>
 <h3 id="components-props-and-slots">Components, props and slots</h3>
 <p>Pages are components, so they can render other components, receive props, render slots, etc.</p>
 <pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
   <span class="hljs-keyword">import</span> <span class="hljs-title class_">Example</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./components/Example.html&#x27;</span>;
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
-<span class="hljs-tag">&lt;<span class="hljs-name">Example</span>&gt;</span>It works.<span class="hljs-tag">&lt;/<span class="hljs-name">Example</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">Example</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;thingy&quot;</span>&gt;</span>It works.<span class="hljs-tag">&lt;/<span class="hljs-name">Example</span>&gt;</span>
 </code></pre>
 <p>The used component <code>Example</code> looks like this:</p>
-<pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>
+<pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  <span class="hljs-keyword">let</span> className;
+  <span class="hljs-keyword">export</span> { className <span class="hljs-keyword">as</span> <span class="hljs-keyword">class</span> };
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">{className}</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">slot</span> /&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
 </code></pre>
