@@ -7,7 +7,7 @@
     <meta name="HandheldFriendly" content="true">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <title>Jamrock :: The herbsman's web framework</title>
-    <meta name="release" content="309cba2">
+    <meta name="release" content="558e202">
     <style>/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */ /* Tomorrow Comment */ .hljs-comment, .hljs-quote { color: #8e908c; } /* Tomorrow Red */ .hljs-variable, .hljs-template-variable, .hljs-tag, .hljs-name, .hljs-selector-id, .hljs-selector-class, .hljs-regexp, .hljs-deletion { color: #c82829; } /* Tomorrow Orange */ .hljs-number, .hljs-built_in, .hljs-builtin-name, .hljs-literal, .hljs-type, .hljs-params, .hljs-meta, .hljs-link { color: #f5871f; } /* Tomorrow Yellow */ .hljs-attribute { color: #eab700; } /* Tomorrow Green */ .hljs-string, .hljs-symbol, .hljs-bullet, .hljs-addition { color: #718c00; } /* Tomorrow Blue */ .hljs-title, .hljs-section { color: #4271ae; } /* Tomorrow Purple */ .hljs-keyword, .hljs-selector-tag { color: #8959a8; } .hljs { display: block; overflow-x: auto; background: white; color: #4d4d4c; padding: 0.5em; } .hljs-emphasis { font-style: italic; } .hljs-strong { font-weight: bold; }</style>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat">
     <style>@keyframes floating { 0% { transform: translateY(0%); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0%); } } body { font-family: Montserrat, 'Sorts Mill Goudy'; background-color: #01111F; color: #BEBEBE; } svg { fill: currentColor; } hr { border: none; border-top: 2px dashed #13272D; } a { color: #79C551; } a:hover { color: #B3E72D; } blockquote { margin: 0; padding: 5px 0 5px 0.5rem; border-radius: 3px; border-left: 0.5rem solid #13272D; background-color: rgba(0, 0, 0, 0.3); } blockquote p:first-child { margin-top: 0; } blockquote p:last-child { margin-bottom: 0; } pre code { display: block; padding: 0.5rem; } p code { color: #B3E72D; } ul, ol { padding-left: 2rem; } small { font-size: 0.8rem; } code { background-color: #2C4C43; border-radius: 3px; padding: 0 2px; color: #79C551; } .meteorite { text-align: center; } .meteorite svg { max-width: 66%; } .meteorite a { transition: color 0.5s; color: #FEFEFE; } .meteorite a:hover { color: #B3E72D; } .floating { animation-name: floating; animation-duration: 4s; animation-iteration-count: infinite; } .welcome { color: #AAEEAA; } .welcome svg { max-width: 150px; margin-top: 50px; } .dimmed { color: #2C4C43; text-shadow: 1px 1px 3px #000000; } .center { text-align: center; } .reset { margin: 0; } .hljs { padding: 0; background-color: rgba(0, 0, 0, 0.3); } .hljs code { background-color: unset; } .body { padding: 1rem; max-width: 640px; margin: auto; margin-bottom: 50px; } .body h1, .body h2, .body h3, .body h4 { color: #2C4C43; text-shadow: 1px 1px 3px #000000; } .flex { display: flex; } .flex .gap { gap: 1rem; } .flex.between { justify-content: space-between; } .flex.centered { align-items: center; }</style>
@@ -215,7 +215,7 @@ Listening on http://0.0.0.0:8080
 <blockquote>
 <p>Set the <code>lang</code> attribute to use Less, Sass, PostCSS or something else if you prefer (ensure you have installed the dependency!).</p>
 </blockquote>
-<h3 id="components-props-and-slots">Components, props and slots</h3>
+<h3 id="components-props-and-slots-%E2%9A%99%EF%B8%8F">Components, props and slots ⚙️</h3>
 <p>Pages are components, so they can render other components, receive props, render slots, etc.</p>
 <pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
   <span class="hljs-keyword">import</span> <span class="hljs-title class_">Example</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./components/Example.html&#x27;</span>;
@@ -248,7 +248,7 @@ Listening on http://0.0.0.0:8080
 <blockquote>
 <p>Only pages will take their props from the body, path and query parameters.</p>
 </blockquote>
-<h3 id="this-is-what-you-ll-get-when-you-mess-with-us">This is what you&#39;ll get (when you mess with us!)</h3>
+<h3 id="this-is-what-you-ll-get-when-you-mess-with-us-%F0%9F%98%8E">This is what you&#39;ll get (when you mess with us! 😎)</h3>
 <p>Pages can handle other methods as well, along with access to the session, redirections, etc.</p>
 <blockquote>
 <p>Name the following as <code>./pages/login+page.html</code> to get a <code>/login</code> route.</p>
@@ -310,7 +310,7 @@ Listening on http://0.0.0.0:8080
 The <code>@delete</code> modifier will decorate the form to handle the request as <code>DELETE</code> by adding a <code>_method</code> field.</p>
 </blockquote>
 <p>The generated markup is always prepared to work seamlessly, so forms will fallback to standard requests if Javascript is disabled.</p>
-<h3 id="layout-and-error-pages">Layout (and error pages)</h3>
+<h3 id="layouts-and-error-pages-%E2%9A%A0%EF%B8%8F">Layouts (and error pages) ⚠️</h3>
 <p>Now, we can use a <code>./pages/+layout.html</code> file at the same level.</p>
 <p>This component will be used to render all sibling pages, which in turn will render the <code>flash</code> messages produced by the login page:</p>
 <pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
@@ -333,7 +333,7 @@ The <code>@delete</code> modifier will decorate the form to handle the request a
 <blockquote>
 <p>Layout and error pages can exist on any route-level, the nearest one to the executed page will be used, if not found then upper levels are scanned to retrieve one.</p>
 </blockquote>
-<h3 id="what-can-i-do-on-the-browser-then">What can I do on the browser then?</h3>
+<h3 id="what-can-i-do-on-the-browser-then-%F0%9F%A4%94">What can I do on the browser then? 🤔</h3>
 <p>We support a limited version of components that runs both on the browser and server-side,
 for example <code>./pages/components/Notifications.html</code> looks like this:</p>
 <pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">context</span>=<span class="hljs-string">&quot;client&quot;</span>&gt;</span><span class="language-javascript">
@@ -372,7 +372,7 @@ for example <code>./pages/components/Notifications.html</code> looks like this:<
 </blockquote>
 <p>As you can tell you can do pretty basic stuff, please explore and share everything you found interesting on the Github repository, and as well on my Twitter account.</p>
 <p>Explore the tests we have so far, you may find interesting stuff!</p>
-<h3 id="acknowledgements">Acknowledgements</h3>
+<h3 id="acknowledgements-%F0%9F%8F%86">Acknowledgements 🏆</h3>
 <p>Nothing of this could be possible without the awesome work of people around the world,
 kudos for all the amazing ideas I robed for this.</p>
 <blockquote>
