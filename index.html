@@ -7,7 +7,7 @@
     <meta name="HandheldFriendly" content="true">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <title>Jamrock :: The herbsman's web framework</title>
-    <meta name="release" content="e5c7559">
+    <meta name="release" content="309cba2">
     <style>/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */ /* Tomorrow Comment */ .hljs-comment, .hljs-quote { color: #8e908c; } /* Tomorrow Red */ .hljs-variable, .hljs-template-variable, .hljs-tag, .hljs-name, .hljs-selector-id, .hljs-selector-class, .hljs-regexp, .hljs-deletion { color: #c82829; } /* Tomorrow Orange */ .hljs-number, .hljs-built_in, .hljs-builtin-name, .hljs-literal, .hljs-type, .hljs-params, .hljs-meta, .hljs-link { color: #f5871f; } /* Tomorrow Yellow */ .hljs-attribute { color: #eab700; } /* Tomorrow Green */ .hljs-string, .hljs-symbol, .hljs-bullet, .hljs-addition { color: #718c00; } /* Tomorrow Blue */ .hljs-title, .hljs-section { color: #4271ae; } /* Tomorrow Purple */ .hljs-keyword, .hljs-selector-tag { color: #8959a8; } .hljs { display: block; overflow-x: auto; background: white; color: #4d4d4c; padding: 0.5em; } .hljs-emphasis { font-style: italic; } .hljs-strong { font-weight: bold; }</style>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat">
     <style>@keyframes floating { 0% { transform: translateY(0%); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0%); } } body { font-family: Montserrat, 'Sorts Mill Goudy'; background-color: #01111F; color: #BEBEBE; } svg { fill: currentColor; } hr { border: none; border-top: 2px dashed #13272D; } a { color: #79C551; } a:hover { color: #B3E72D; } blockquote { margin: 0; padding: 5px 0 5px 0.5rem; border-radius: 3px; border-left: 0.5rem solid #13272D; background-color: rgba(0, 0, 0, 0.3); } blockquote p:first-child { margin-top: 0; } blockquote p:last-child { margin-bottom: 0; } pre code { display: block; padding: 0.5rem; } p code { color: #B3E72D; } ul, ol { padding-left: 2rem; } small { font-size: 0.8rem; } code { background-color: #2C4C43; border-radius: 3px; padding: 0 2px; color: #79C551; } .meteorite { text-align: center; } .meteorite svg { max-width: 66%; } .meteorite a { transition: color 0.5s; color: #FEFEFE; } .meteorite a:hover { color: #B3E72D; } .floating { animation-name: floating; animation-duration: 4s; animation-iteration-count: infinite; } .welcome { color: #AAEEAA; } .welcome svg { max-width: 150px; margin-top: 50px; } .dimmed { color: #2C4C43; text-shadow: 1px 1px 3px #000000; } .center { text-align: center; } .reset { margin: 0; } .hljs { padding: 0; background-color: rgba(0, 0, 0, 0.3); } .hljs code { background-color: unset; } .body { padding: 1rem; max-width: 640px; margin: auto; margin-bottom: 50px; } .body h1, .body h2, .body h3, .body h4 { color: #2C4C43; text-shadow: 1px 1px 3px #000000; } .flex { display: flex; } .flex .gap { gap: 1rem; } .flex.between { justify-content: space-between; } .flex.centered { align-items: center; }</style>
@@ -234,45 +234,28 @@ Listening on http://0.0.0.0:8080
 <p>Given props will be <code>undefined</code> if no default value is declared.</p>
 </blockquote>
 <h3 id="this-is-what-you-ll-get-when-you-mess-with-us">This is what you&#39;ll get (when you mess with us!)</h3>
-<p>Pages can do almost anything, as you can see it can be fun as hell:</p>
+<p>Pages can handle other methods as well, along with access to the session, redirections, etc.</p>
+<blockquote>
+<p>Name the following as <code>./pages/login+page.html</code> to get a <code>/login</code> route.</p>
+</blockquote>
 <pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
   <span class="hljs-keyword">import</span> { redirect, session, flash } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;jamrock:conn&#x27;</span>;
-
-  <span class="hljs-keyword">import</span> <span class="hljs-title class_">Route</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./components/route.html&#x27;</span>;
-  <span class="hljs-keyword">import</span> <span class="hljs-title class_">Failure</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./components/failure.html&#x27;</span>;
-
-  <span class="hljs-keyword">import</span> { isLogged } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./stores.mjs&#x27;</span>;
-  <span class="hljs-keyword">import</span> { <span class="hljs-title class_">User</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./models.mjs&#x27;</span>;
 
   <span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> email;
   <span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> password;
 
-  <span class="hljs-keyword">let</span> error = <span class="hljs-literal">null</span>;
-
   <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
-    <span class="hljs-attr">as</span>: <span class="hljs-string">&#x27;login_page&#x27;</span>,
-
     <span class="hljs-keyword">async</span> <span class="hljs-title function_">POST</span>(<span class="hljs-params"></span>) {
-      <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-title class_">User</span>.<span class="hljs-title function_">verifyAuth</span>({ email, password });
-
-      <span class="hljs-keyword">if</span> (user) {
-        session.<span class="hljs-property">user</span> = {
-          <span class="hljs-attr">currentInfo</span>: user.<span class="hljs-property">record</span>,
-          <span class="hljs-attr">expirationDate</span>: <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>() + <span class="hljs-number">864000</span>,
-        };
+      <span class="hljs-keyword">if</span> (email === <span class="hljs-string">&#x27;admin@example.com&#x27;</span> &amp;&amp; password === <span class="hljs-string">&#x27;42&#x27;</span>) {
         <span class="hljs-title function_">flash</span>(<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&quot;You&#x27;ve been logged in!&quot;</span>);
+        session.<span class="hljs-property">loggedIn</span> = <span class="hljs-literal">true</span>;
         <span class="hljs-title function_">redirect</span>(<span class="hljs-string">&#x27;/login&#x27;</span>);
       }
     },
-
     <span class="hljs-title function_">DELETE</span>(<span class="hljs-params"></span>) {
       <span class="hljs-title function_">flash</span>(<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&quot;You&#x27;ve been logged off!&quot;</span>);
-      session.<span class="hljs-property">user</span> = <span class="hljs-literal">null</span>;
+      session.<span class="hljs-property">loggedIn</span> = <span class="hljs-literal">null</span>;
       <span class="hljs-title function_">redirect</span>(<span class="hljs-string">&#x27;/login&#x27;</span>);
-    },
-
-    <span class="hljs-keyword">catch</span>(e) {
-      error = e;
     },
   };
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
@@ -281,7 +264,7 @@ Listening on http://0.0.0.0:8080
   <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Log in<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
 
-{#if isLogged}
+{#if session.loggedIn}
   <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Glad you&#x27;re back!<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;/login&quot;</span> @<span class="hljs-attr">delete</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>Logout<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
@@ -292,7 +275,7 @@ Listening on http://0.0.0.0:8080
     <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>E-mail:<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;email&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;email&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{email}</span> <span class="hljs-attr">autofocus</span> <span class="hljs-attr">required</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;email&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;email&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{email}</span> <span class="hljs-attr">required</span> /&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
@@ -301,17 +284,20 @@ Listening on http://0.0.0.0:8080
         <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">required</span> /&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">Failure</span> <span class="hljs-attr">from</span>=<span class="hljs-string">{error}</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>Login<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> or <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/new&quot;</span>&gt;</span>create your account<span class="hljs-tag">&lt;/<span class="hljs-name">Route</span>&gt;</span>.
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>Login<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
 {/if}
 </code></pre>
-<p>By the way, we have some support for layouts and such, e.g.</p>
+<blockquote>
+<p>The <code>@async</code> modifier tells that form can be handled with Javascript, so an XHR request is performed instead.
+The <code>@delete</code> modifier will decorate the form to handle the request as <code>DELETE</code> by adding a <code>_method</code> field.</p>
+</blockquote>
+<p>The generated markup is always prepared to work seamlessly, so forms will fallback to standard requests if Javascript is disabled.</p>
+<h3 id="layout-and-error-pages">Layout (and error pages)</h3>
+<p>Now, we can use a <code>./pages/+layout.html</code> file at the same level.</p>
+<p>This component will be used to render all sibling pages, which in turn will render the <code>flash</code> messages produced by the login page:</p>
 <pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
-  <span class="hljs-keyword">import</span> { method, flash } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;jamrock:conn&#x27;</span>;
-  <span class="hljs-keyword">import</span> { isLogged, currentInfo } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./stores.mjs&#x27;</span>;
-
-  <span class="hljs-keyword">import</span> <span class="hljs-title class_">Notifications</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./components/notifications.html&#x27;</span>;
+  <span class="hljs-keyword">import</span> { session, method, flash } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;jamrock:conn&#x27;</span>;
 
   <span class="hljs-keyword">let</span> messages = [];
   <span class="hljs-keyword">if</span> (method === <span class="hljs-string">&#x27;GET&#x27;</span>) {
@@ -319,68 +305,26 @@ Listening on http://0.0.0.0:8080
   }
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
-<span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">global</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;less&quot;</span>&gt;</span><span class="language-css">
-  <span class="hljs-selector-class">.loading</span> {
-    <span class="hljs-attribute">pointer-events</span>: none;
-    <span class="hljs-attribute">position</span>: relative;
+<span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  {#each messages as msg}
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>{msg.type}: {msg.value}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  {/each}
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
 
-    &amp;<span class="hljs-selector-pseudo">::after</span> {
-      <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>, .<span class="hljs-number">5</span>);
-      <span class="hljs-attribute">position</span>: absolute;
-      <span class="hljs-attribute">color</span>: inherit;
-      <span class="hljs-attribute">content</span>: <span class="hljs-string">&#x27;&#x27;</span>;
-      <span class="hljs-attribute">bottom</span>: <span class="hljs-number">0</span>;
-      <span class="hljs-attribute">right</span>: <span class="hljs-number">0</span>;
-      <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;
-      <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;
-    }
-  }
-  *,
-  *<span class="hljs-selector-pseudo">::after</span>,
-  *<span class="hljs-selector-pseudo">::before</span> {
-    <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
-    <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;
-  }
-  <span class="hljs-selector-class">.profile</span> {
-    <span class="hljs-attribute">display</span>: inline-flex;
-  }
-  <span class="hljs-selector-class">.profile</span> <span class="hljs-selector-tag">img</span> { <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">5px</span>; }
-</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">slot</span> /&gt;</span>
+</code></pre>
+<p>The same way we can have a <code>./pages/+error.html</code> to decorate the failures captured on the same route-level, e.g.</p>
+<pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> failure = <span class="hljs-literal">null</span>;
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
-<span class="hljs-tag">&lt;<span class="hljs-name">nav</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">fragment</span> <span class="hljs-attr">tag</span>=<span class="hljs-string">&quot;li&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;auth&quot;</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&quot;_top&quot;</span>&gt;</span>Home<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
-      | {#if isLogged}
-        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;profile&quot;</span>&gt;</span>
-          {#if currentInfo.picture}
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/{currentInfo.picture}&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;16&quot;</span> /&gt;</span>
-          {/if}
-          <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/login&quot;</span>&gt;</span>{currentInfo.email}<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
-      {:else}
-        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/login&quot;</span>&gt;</span>Log-in<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span> or <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/new&quot;</span>&gt;</span>Create account<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
-      {/if}
-    <span class="hljs-tag">&lt;/<span class="hljs-name">fragment</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">nav</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-name">Notifications</span> <span class="hljs-attr">from</span>=<span class="hljs-string">{messages}</span> /&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-name">fieldset</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">legend</span>&gt;</span>PAGE<span class="hljs-tag">&lt;/<span class="hljs-name">legend</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">fragment</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;main&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">slot</span> /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-name">fragment</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">fieldset</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">pre</span>&gt;</span>{@debug failure}<span class="hljs-tag">&lt;/<span class="hljs-name">pre</span>&gt;</span>
 </code></pre>
 <blockquote>
-<p>This works, but we don&#39;t know the limits of the framework yet!</p>
+<p>Layout and error pages can exist on any route-level, the nearest one to the executed page will be used, if not found then upper levels are scanned to retrieve one.</p>
 </blockquote>
-<p>As you can tell you can do pretty basic stuff,
-please explore and share everything you found interesting on the Github repository,
-and as well on my Twitter account.</p>
-<p>Explore the tests we have so far, you may find interesting stuff.</p>
+<p>As you can tell you can do pretty basic stuff, please explore and share everything you found interesting on the Github repository, and as well on my Twitter account.</p>
+<p>Explore the tests we have so far, you may find interesting stuff!</p>
 <h3 id="acknowledgements">Acknowledgements</h3>
 <p>Nothing of this could be possible without the awesome work of people around the world,
 kudos for all the amazing ideas I robed for this.</p>
