@@ -245,11 +245,13 @@ Listening on http://0.0.0.0:8080
   <span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> password;
 
   <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
-    <span class="hljs-keyword">async</span> <span class="hljs-title function_">POST</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-title function_">POST</span>(<span class="hljs-params"></span>) {
       <span class="hljs-keyword">if</span> (email === <span class="hljs-string">&#x27;admin@example.com&#x27;</span> &amp;&amp; password === <span class="hljs-string">&#x27;42&#x27;</span>) {
         <span class="hljs-title function_">flash</span>(<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&quot;You&#x27;ve been logged in!&quot;</span>);
         session.<span class="hljs-property">loggedIn</span> = <span class="hljs-literal">true</span>;
         <span class="hljs-title function_">redirect</span>(<span class="hljs-string">&#x27;/login&#x27;</span>);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-title function_">flash</span>(<span class="hljs-string">&#x27;error&#x27;</span>, <span class="hljs-string">&#x27;Your input is wrong!&#x27;</span>);
       }
     },
     <span class="hljs-title function_">DELETE</span>(<span class="hljs-params"></span>) {
@@ -297,19 +299,12 @@ The <code>@delete</code> modifier will decorate the form to handle the request a
 <p>Now, we can use a <code>./pages/+layout.html</code> file at the same level.</p>
 <p>This component will be used to render all sibling pages, which in turn will render the <code>flash</code> messages produced by the login page:</p>
 <pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
-  <span class="hljs-keyword">import</span> { session, method, flash } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;jamrock:conn&#x27;</span>;
+  <span class="hljs-keyword">import</span> { flash } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;jamrock:conn&#x27;</span>;
 
-  <span class="hljs-keyword">let</span> messages = [];
-  <span class="hljs-keyword">if</span> (method === <span class="hljs-string">&#x27;GET&#x27;</span>) {
-    messages = <span class="hljs-title function_">flash</span>() || <span class="hljs-literal">null</span>;
-  }
+  <span class="hljs-keyword">import</span> <span class="hljs-title class_">Notifications</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./components/Notifications.html&#x27;</span>;
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
-<span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
-  {#each messages as msg}
-    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>{msg.type}: {msg.value}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
-  {/each}
-<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">Notifications</span> <span class="hljs-attr">tag</span>=<span class="hljs-string">&quot;ul&quot;</span> <span class="hljs-attr">from</span>=<span class="hljs-string">{flash()}</span> /&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-name">slot</span> /&gt;</span>
 </code></pre>
@@ -322,6 +317,43 @@ The <code>@delete</code> modifier will decorate the form to handle the request a
 </code></pre>
 <blockquote>
 <p>Layout and error pages can exist on any route-level, the nearest one to the executed page will be used, if not found then upper levels are scanned to retrieve one.</p>
+</blockquote>
+<h3 id="what-can-i-do-on-the-browser-then">What can I do on the browser then?</h3>
+<p>We support a limited version of components that runs both on the browser and server-side,
+for example <code>./pages/components/Notifications.html</code> looks like this:</p>
+<pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">context</span>=<span class="hljs-string">&quot;client&quot;</span>&gt;</span><span class="language-javascript">
+  <span class="hljs-keyword">import</span> { useState, useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;jamrock&#x27;</span>;
+
+  <span class="hljs-keyword">let</span> messages = [];
+  <span class="hljs-keyword">export</span> { messages <span class="hljs-keyword">as</span> <span class="hljs-keyword">from</span> };
+
+  <span class="hljs-keyword">const</span> [msgs, setMsgs] = <span class="hljs-title function_">useState</span>(messages);
+
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">close</span>(<span class="hljs-params">offset</span>) {
+    <span class="hljs-title function_">setMsgs</span>(msgs.<span class="hljs-title function_">filter</span>(<span class="hljs-function">(<span class="hljs-params">_, i</span>) =&gt;</span> i !== offset));
+  }
+
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">pop</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">if</span> (!msgs.<span class="hljs-property">length</span>) <span class="hljs-keyword">return</span>;
+    msgs.<span class="hljs-title function_">pop</span>();
+    <span class="hljs-title function_">setMsgs</span>(msgs);
+  }
+
+  <span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">const</span> t = <span class="hljs-built_in">setInterval</span>(pop, <span class="hljs-number">5000</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">clearInterval</span>(t);
+  }, []);
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+{#each msgs as msg, i}
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">{msg.type}</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>{msg.value}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;{() =&gt; close(i)}&quot;</span>&gt;</span><span class="hljs-symbol">&amp;times;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+{/each}
+</code></pre>
+<blockquote>
+<p>This behaviour is experimental, and very very limited, interoperation between client and server-side components is still in progress...</p>
 </blockquote>
 <p>As you can tell you can do pretty basic stuff, please explore and share everything you found interesting on the Github repository, and as well on my Twitter account.</p>
 <p>Explore the tests we have so far, you may find interesting stuff!</p>
