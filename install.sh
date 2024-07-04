@@ -2,7 +2,12 @@
 
 rm -rf $HOME/.jamrock
 mkdir -p $HOME/.jamrock
+
+echo "1. Downloading package..."
+
 curl https://jamrock.dev/jamrock-0.0.0.tgz | tar zx -C $HOME/.jamrock/
+
+echo "2. Installing binary..."
 
 CLI=/usr/local/bin/jamrock
 
@@ -13,4 +18,4 @@ EOF
 
 chmod +x $CLI
 
-echo "Done, now grab a beer!"
+echo "3. Done, now grab a beer!"
