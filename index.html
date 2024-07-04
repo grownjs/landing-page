@@ -207,17 +207,15 @@ Listening on http://0.0.0.0:8080
 <p>Pages are components, so they can render other components, receive props, render slots, etc.</p>
 <pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
   <span class="hljs-keyword">import</span> <span class="hljs-title class_">Example</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./components/Example.html&#x27;</span>;
-
-  <span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> name = <span class="hljs-literal">null</span>;
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
-<span class="hljs-tag">&lt;<span class="hljs-name">Example</span>&gt;</span>
-  Hello {name}
-<span class="hljs-tag">&lt;/<span class="hljs-name">Example</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">Example</span>&gt;</span>It works.<span class="hljs-tag">&lt;/<span class="hljs-name">Example</span>&gt;</span>
 </code></pre>
-<blockquote>
-<p>Only pages will take their props from the body, path and query parameters.</p>
-</blockquote>
+<p>The used component <code>Example</code> looks like this:</p>
+<pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">slot</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+</code></pre>
 <p>Try using a form to read some input from the user:</p>
 <pre class="hljs"><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
   <span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> example;
@@ -231,7 +229,7 @@ Listening on http://0.0.0.0:8080
 <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
 </code></pre>
 <blockquote>
-<p>Given props will be <code>undefined</code> if no default value is declared.</p>
+<p>Only pages will take their props from the body, path and query parameters.</p>
 </blockquote>
 <h3 id="this-is-what-you-ll-get-when-you-mess-with-us">This is what you&#39;ll get (when you mess with us!)</h3>
 <p>Pages can handle other methods as well, along with access to the session, redirections, etc.</p>
